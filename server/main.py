@@ -10,8 +10,8 @@ socketio = SocketIO(app)
 @app.route("/")
 def index():
     """Return HTML"""
-    #return render_template('index.html')
-    pass
+    return render_template('index.html')
+    #pass
 
 # Reserved event: Connect
 @socketio.on('connect')
