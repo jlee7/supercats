@@ -1,3 +1,35 @@
+<!doctype html>
 <HTML>
-SuperCats oder TenCents
+<title>SuperCats oder TenCents</title>
+
+<h1>[Spieletitel]</h1>
+{% if frage %}
+<h2>{{ frage }}<h2>
+{% endif %}
+
+{% if antwort %}
+<h3>{{ antwort }}<h2>
+{% endif %}
+
+<button type="submit" name="antwort" value="JA" onclick="javascript:senden(this.value)">JA</button>
+<button type="submit" name="antwort" value="NEIN" onclick="javascript:senden(this.value)">NEIN</button>
+
+
+
+
+<!-- JAVA SCRIPT -->
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+     var socket = io.connect('http://' + document.domain + ':' + location.port);
+     socket.on('connect', function() {
+         socket.emit('message_from_client', {data: 'Client is now connected.'});
+     });
+
+     function senden (value) {
+       console.log(value);
+       socket.emit('message_from_client', {data: value});
+     }
+</script>
+
+
 </HTML>
