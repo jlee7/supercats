@@ -22,7 +22,7 @@
 <script type="text/javascript" charset="utf-8">
      var socket = io.connect('http://' + document.domain + ':' + location.port);
      socket.on('connect', function() {
-         socket.emit('message_from_client', {data: 'Client is now connected.'});
+         socket.emit('message_from_client', {data: 'This is a message from the client.'});
      });
 
      function senden (value) {

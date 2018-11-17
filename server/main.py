@@ -9,6 +9,7 @@ socketio = SocketIO(app)
 # Variables -----------------------------------------------------
 room = list()
 max_user = 3
+question = list()
 #----------------------------------------------------------------
 
 
@@ -34,9 +35,15 @@ def is_room_full():
 
 def add_user_to_room(sid):
     room.append(sid)
+    print("Added to room:", sid)
+    print("Room:", room)
+    print("-" * 5)
 
 def remove_user_from_room(sid):
     room.remove(sid)
+    print("Removed from room:", sid)
+    print("Room:", room)
+    print("-" * 5)
 #----------------------------------------------------------------
 
 
@@ -54,26 +61,24 @@ def index():
 @socketio.on('connect')
 def test_connect():
     """Gets fired on any client-server connection"""
-    print("SocketIO: Connected:", request.sid)
+    #print("SocketIO: Connected:", request.sid)
     add_user_to_room(request.sid)
-    print(is_room_full())
-    print(room)
 
 # Reserved event: Disconnect
 @socketio.on('disconnect')
 def test_disconnect():
     """Gets fired on any client-server disconnect"""
-    print('SocketIO: Disconnected:', request.sid)
+    #print('SocketIO: Disconnected:', request.sid)
     remove_user_from_room(request.sid)
-    print(room)
 
 # Custom event: Any message from client
 @socketio.on('message_from_client') #  Event name is crucial.
 def handle_my_custom_event(json_data):
     """Use this function to receive events from the client.
        A JSON is always sent along and it hold all necessary data."""
-    print("SocketIO: Received a message and forwarding to MessageHandler.")
-    print(json_data)
+    #print("SocketIO: Received a message and forwarding to MessageHandler.")
+    #print(json_data)
+    pass
 
 # Emit events to one client as response
 def emit_event(event_name, json_data):
@@ -89,11 +94,10 @@ def emit_event_to_all_clients(event_name, json_data):
     print("SocketIO: Sending to all clients: ",event_name)
 
 
-
 # Boilerplate starts SocketIO instead of standard flask.
 if __name__ == '__main__':
-    socketio.run(app)
-    # socketio.run(app, host="192.168.178.23", port="5001")
+    #socketio.run(app)
+    socketio.run(app, host="192.168.178.23", port="5001")
 
 
 """
